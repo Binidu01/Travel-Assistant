@@ -19,4 +19,6 @@ app.all('/api/chat', async (c) => {
   });
 
 export const config = { runtime: 'edge' };
-export default app.fetch;
+export default function(request: Request) {
+  return app.fetch(request);
+}
