@@ -18,7 +18,7 @@ export default defineConfig(({ command, mode }) => {
     plugins: [
       tailwindcss(),
       react(),
-      biniroute({ platform: 'vercel' }),
+      biniroute({ platform: 'node' }),
       biniOverlay(),
       biniEnv(),
       biniExport(),
