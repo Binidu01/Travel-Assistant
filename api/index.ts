@@ -8,7 +8,7 @@ import _route0 from '../src/app/api/chat';
 
 const app = new Hono();
 app.use('/api/*', cors({ origin: '*', allowMethods: ['GET','POST','PUT','PATCH','DELETE','OPTIONS'], allowHeaders: ['Content-Type','Authorization'] }));
-app.all('/api/api/chat', async (c) => { 
+app.all('/api/chat', async (c) => { 
     try {
       const r = await _route0(c.req.raw);
       return r instanceof Response ? r : c.json(r);
