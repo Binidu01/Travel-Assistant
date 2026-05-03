@@ -1,4 +1,6 @@
-// src/app/api/chat.ts
+// src/app/api/chat.
+
+import { getEnv, requireEnv } from 'bini-env'
 
 // Types
 interface Message {
@@ -30,6 +32,7 @@ export default async function handler(request: Request) {
         )
       }
 
+      // Limit message length
       if (message.length > 2000) {
         return Response.json(
           { error: 'Message is too long. Please keep it under 2000 characters.' },
@@ -37,6 +40,7 @@ export default async function handler(request: Request) {
         )
       }
 
+      // Validate history shape
       if (!Array.isArray(history)) {
         return Response.json(
           { error: 'History must be an array' },
@@ -44,19 +48,11 @@ export default async function handler(request: Request) {
         )
       }
 
-      // Read env vars directly — Vercel injects these at runtime, no loader needed
-      const apiKey = process.env.OLLAMA_API_KEY
-      const apiUrl = process.env.OLLAMA_API_URL || 'https://ollama.com/api/chat'
-      const model = process.env.OLLAMA_MODEL || 'gpt-oss:120b-cloud'
-      const temperature = parseFloat(process.env.OLLAMA_TEMPERATURE || '0.8')
-
-      if (!apiKey) {
-        console.error('OLLAMA_API_KEY is not set')
-        return Response.json(
-          { reply: '⚠️ API configuration error. Please check server settings.' },
-          { status: 500 }
-        )
-      }
+      // Get environment variables via bini-env auto-imports
+      const apiKey = requireEnv('OLLAMA_API_KEY')
+      const apiUrl = getEnv('OLLAMA_API_URL') || 'https://ollama.com/api/chat'
+      const model = getEnv('OLLAMA_MODEL') || 'gpt-oss:120b-cloud'
+      const temperature = parseFloat(getEnv('OLLAMA_TEMPERATURE') || '0.8')
 
       // Get current time for AI to use
       const now = new Date()
@@ -66,6 +62,7 @@ export default async function handler(request: Request) {
         time: now.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
       }
 
+      // SINGLE SYSTEM PROMPT - AI handles everything
       const systemPrompt = `You are an AI assistant specialized in Sri Lanka hotels and accommodations.
 
 ABOUT YOU:
@@ -136,6 +133,7 @@ You are an AI - you have no hardcoded responses. Generate everything uniquely fo
 
       const data = await response.json()
 
+      // Validate response shape
       if (!data.message?.content) {
         console.error('Unexpected Ollama response shape:', JSON.stringify(data))
         throw new Error('Invalid response from model')
@@ -160,6 +158,7 @@ You are an AI - you have no hardcoded responses. Generate everything uniquely fo
         }
       })
     } catch (error: any) {
+      // Handle fetch timeout
       if (error.name === 'AbortError') {
         console.error('Ollama request timed out')
         return Response.json(
