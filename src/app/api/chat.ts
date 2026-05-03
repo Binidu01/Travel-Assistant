@@ -1,6 +1,4 @@
-// src/app/api/chat.
-
-import { getEnv, requireEnv } from 'bini-env'
+// src/app/api/chat.ts
 
 // Types
 interface Message {
@@ -48,11 +46,17 @@ export default async function handler(request: Request) {
         )
       }
 
-      // Get environment variables via bini-env auto-imports
-      const apiKey = requireEnv('OLLAMA_API_KEY')
-      const apiUrl = getEnv('OLLAMA_API_URL') || 'https://ollama.com/api/chat'
-      const model = getEnv('OLLAMA_MODEL') || 'gpt-oss:120b-cloud'
-      const temperature = parseFloat(getEnv('OLLAMA_TEMPERATURE') || '0.8')
+      // Environment variables — set these in Vercel dashboard → Project Settings → Environment Variables
+      const apiKey = process.env.OLLAMA_API_KEY
+      if (!apiKey) {
+        return Response.json(
+          { error: 'Server misconfiguration: missing OLLAMA_API_KEY' },
+          { status: 500 }
+        )
+      }
+      const apiUrl      = process.env.OLLAMA_API_URL    || 'https://ollama.com/api/chat'
+      const model       = process.env.OLLAMA_MODEL       || 'gpt-oss:120b-cloud'
+      const temperature = parseFloat(process.env.OLLAMA_TEMPERATURE || '0.8')
 
       // Get current time for AI to use
       const now = new Date()
