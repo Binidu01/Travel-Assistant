@@ -16,7 +16,7 @@
   "dependencies": {
     "bini-overlay": "latest",
     "bini-router": "latest",
-    "bini-server": "1.0.7",
+    "bini-server": "1.0.8",
     "hono": "latest",
     "lucide-react": "^1.14.0",
     "react": "latest",
