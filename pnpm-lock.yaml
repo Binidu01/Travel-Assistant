@@ -15,8 +15,8 @@ importers:
         specifier: latest
         version: 1.0.40(hono@4.12.18)(react-dom@19.2.6(react@19.2.6))(react-router-dom@7.15.0(react-dom@19.2.6(react@19.2.6))(react@19.2.6))(react@19.2.6)(vite@8.0.12(@types/node@25.6.2)(jiti@2.7.0))
       bini-server:
-        specifier: 1.0.8
-        version: 1.0.8
+        specifier: 1.0.9
+        version: 1.0.9
       hono:
         specifier: latest
         version: 4.12.18
@@ -649,8 +649,8 @@ packages:
       react-router-dom: '>=6.0.0'
       vite: '>=8.0.0'
 
-  bini-server@1.0.8:
-    resolution: {integrity: sha512-mRcjy04qcWUlrfJDwP+Ntv0sCRjoyWMgRVZW/ScoV7rVIfxUDEJpa+T8MtzsxqquQh7GDlzZcT4eHKpz2dGc/w==}
+  bini-server@1.0.9:
+    resolution: {integrity: sha512-sfs9csEpSyGr1k8iJabWN5tRu/3dYpEKDlv9nYSkbIVFUqcfyZP38M1ZxRPXxXRhvh9u8g8B6seTwWkUK2aaLQ==}
     engines: {node: '>=20.19.0'}
     hasBin: true
 
@@ -1591,7 +1591,7 @@ snapshots:
       react-router-dom: 7.15.0(react-dom@19.2.6(react@19.2.6))(react@19.2.6)
       vite: 8.0.12(@types/node@25.6.2)(jiti@2.7.0)
 
-  bini-server@1.0.8: {}
+  bini-server@1.0.9: {}
 
   ccount@2.0.1: {}
 
